@@ -1,6 +1,5 @@
 package com.jdriven.axon.workshop.shoppingcart.domain;
 
-import com.jdriven.axon.workshop.shoppingcart.makers.AddTradeItemCommandMakers;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.junit.Before;

@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
 import org.axonframework.eventhandling.EventHandler;
+import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.spring.stereotype.Aggregate;
 
 import java.util.ArrayList;
@@ -17,6 +18,13 @@ import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
 @Aggregate
 @NoArgsConstructor
 @Slf4j
+// Voorbereiding: simpele web-interface
+// Opdracht 1: maak deze aggregate en zorg voor een winkelwagen
+//             unit test is gegeven
+// Opdracht 2: voeg een item toe aan de winkelwagen
+// Opdracht 3: maak projectie van winkelwagen en items
+// Opdracht 4: Afrekenen
+// Opdracht 5: marketing wil weten welke items vlak voor het afrekenen zijn verwijderd
 public class ShoppingCartAggregate {
 
     @AggregateIdentifier
@@ -34,14 +42,14 @@ public class ShoppingCartAggregate {
         apply(new TradeItemAddedEvent(cmd.getShoppingCartId(), cmd.getTradeItem()));
     }
 
-    @EventHandler
+    @EventSourcingHandler
     public void on(ShoppingCartCreatedEvent evt) {
         this.id = evt.getId();
         this.tradeItems = new ArrayList<>();
         log.info("Shopping cart {} created", evt.getId());
     }
 
-    @EventHandler
+    @EventSourcingHandler
     public void on(TradeItemAddedEvent evt) {
         this.tradeItems.add(evt.getTradeItem());
         log.info("TradeItem {} added to Shopping cart {}", evt.getTradeItem(), evt.getShoppingCartId());
